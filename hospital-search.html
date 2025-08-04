@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrganFinder - Hospital Search</title>
+    <link rel="stylesheet" href="style.css"> <link rel="stylesheet" href="hospital-search.css"> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i></a> <i class="fas fa-heart"></i> OrganFinder
+                <span class="tagline">Hospital Search</span>
+            </div>
+            <div class="last-updated">
+                <i class="fas fa-clock"></i> Last updated: <span id="lastUpdatedTime">1:54:31 PM</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="search-hero-section">
+            <div class="container">
+                <h2>Find Organ Availability</h2>
+                <p>Search for real-time organ availability across hospitals in India. Select your location and required organ type to get started.</p>
+
+                <div class="search-filters">
+                    <div class="filter-group">
+                        <label for="stateSelect">Select State</label>
+                        <div class="custom-select-wrapper">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <select id="stateSelect">
+                                <option value="All States">All States</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Haryana">Haryana</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label for="districtSelect">Select District</label>
+                        <div class="custom-select-wrapper">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <select id="districtSelect">
+                                <option value="All Districts">All Districts</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label for="organSelect">Required Organ</label>
+                        <div class="custom-select-wrapper">
+                            <i class="fas fa-heartbeat"></i>
+                            <select id="organSelect">
+                                <option value="All Organs">All Organs</option>
+                                <option value="Heart">Heart</option>
+                                <option value="Kidney">Kidney</option>
+                                <option value="Liver">Liver</option>
+                                <option value="Lung">Lung</option>
+                                <option value="Pancreas">Pancreas</option>
+                                <option value="Cornea">Cornea</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="hospital-results-section">
+            <div class="container">
+                <div class="results-header">
+                    <h2>Available Hospitals (<span id="hospitalCount">8</span>)</h2>
+                    <div class="legend">
+                        <span class="legend-item"><span class="color-dot green"></span> Available</span>
+                        <span class="legend-item"><span class="color-dot yellow"></span> Limited</span>
+                        <span class="legend-item"><span class="color-dot red"></span> Unavailable</span>
+                    </div>
+                </div>
+
+                <div class="hospital-grid" id="hospitalGrid">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer secondary-footer">
+        <div class="container footer-grid">
+            <div class="footer-column">
+                <h4>Emergency Support</h4>
+                <ul>
+                    <li><i class="fas fa-phone-alt"></i> 24/7 Helpline: 1800-123-4567</li>
+                    <li><i class="fas fa-envelope"></i> emergency@organfinder.in</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Actions</h4>
+                <ul>
+                    <li><a href="index.html">Back to Home</a></li>
+                    <li><a href="#">Report Issue</a></li>
+                    <li><a href="#">Update Hospital Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Feedback</h4>
+                <p>Help us improve our search functionality and save more lives. Your feedback is valuable.</p>
+                <button class="btn-secondary">Send Feedback</button>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <p><i class="fas fa-heartbeat"></i> This is a demonstration. In real emergencies, contact emergency services immediately.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="hospital-search.js"></script>
+</body>
+</html>

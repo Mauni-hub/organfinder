@@ -1,0 +1,390 @@
+/* Import global variables and basic styles from style.css if needed, or ensure they are properly inherited */
+/* :root variables are already defined in style.css, so we can use them directly */
+
+/* Adjustments for the specific header on the search page */
+.navbar .last-updated {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.navbar .last-updated .fas {
+    color: var(--light-purple);
+}
+
+.navbar .back-link {
+    color: var(--text-color);
+    margin-right: 15px;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.navbar .back-link:hover {
+    color: var(--primary-purple);
+}
+
+/* Search Hero Section */
+.search-hero-section {
+    background: linear-gradient(135deg, #5E368F, var(--primary-purple)); /* Slightly different gradient */
+    padding: 60px 0;
+    text-align: center;
+    color: white;
+}
+
+.search-hero-section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.search-hero-section p {
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    opacity: 0.9;
+}
+
+.search-filters {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    margin: 40px auto 0 auto;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px; /* Ensure filters don't get too small */
+    text-align: left;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    color: var(--light-purple);
+    font-weight: 500;
+}
+
+.custom-select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--dark-background);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    height: 45px; /* Consistent height for selects */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.custom-select-wrapper .fas {
+    position: absolute;
+    left: 15px;
+    color: var(--text-color);
+    font-size: 1rem;
+    pointer-events: none; /* Make icon unclickable */
+    z-index: 1;
+}
+
+.custom-select-wrapper select {
+    width: 100%;
+    padding: 10px 15px 10px 45px; /* Adjust padding for icon */
+    background-color: transparent; /* Make select background transparent to show wrapper's background */
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    -webkit-appearance: none; /* Remove default arrow */
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    z-index: 2; /* Place select above icon */
+}
+
+/* Custom styling for dropdown options - NEW / MODIFIED */
+.custom-select-wrapper select option {
+    background-color: var(--card-background); /* Background for individual options */
+    color: var(--text-color); /* Text color for options */
+    padding: 10px; /* Padding for options */
+}
+
+/* Hover/active state for options (browser specific, often hard to fully control cross-browser) */
+/* This might be overridden by OS/Browser native styling, but we try to influence it */
+.custom-select-wrapper select option:hover,
+.custom-select-wrapper select option:checked {
+    background-color: #3498db; /* A blue similar to your screenshot highlight */
+    color: white; /* White text on blue highlight */
+}
+
+
+.custom-select-wrapper select:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+}
+
+/* Add custom arrow for select */
+.custom-select-wrapper::after {
+    content: '\f078'; /* Font Awesome chevron-down icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color);
+    font-size: 0.8rem;
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+/* Hospital Results Section */
+.hospital-results-section {
+    padding: var(--padding-section);
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap; /* Allow wrap on small screens */
+    gap: 20px;
+}
+
+.results-header h2 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.legend {
+    display: flex;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.color-dot.green { background-color: #388E3C; /* Darker green */ }
+.color-dot.yellow { background-color: #FBC02D; /* Darker yellow/amber */ }
+.color-dot.red { background-color: #D32F2F; /* Darker red */ }
+
+
+.hospital-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); /* Two columns, responsive */
+    gap: 30px;
+}
+
+.hospital-card {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.hospital-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    color: var(--heading-color);
+}
+
+.hospital-location {
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hospital-address {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+
+.organ-availability-title {
+    font-size: 1.2rem;
+    color: var(--light-purple);
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.organ-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); /* 3 columns for organs */
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.organ-item {
+    background-color: var(--dark-background);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.organ-item span {
+    display: block;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+/* Organ Status Colors - CORRECTED */
+.organ-item.available {
+    background-color: #2F4F4F; /* Dark Slate Gray - matches screenshot green */
+    color: var(--text-color); /* Maintain light text color */
+}
+.organ-item.available span {
+    color: var(--text-color); /* Maintain light text color */
+}
+
+.organ-item.limited {
+    background-color: #4D3D1D; /* Darker Yellowish Brown */
+    color: var(--text-color); /* Maintain light text color */
+}
+.organ-item.limited span {
+    color: var(--text-color); /* Maintain light text color */
+}
+
+.organ-item.unavailable {
+    background-color: #4A2020; /* Darker Reddish Brown */
+    color: var(--text-color); /* Maintain light text color */
+}
+.organ-item.unavailable span {
+    color: var(--text-color); /* Maintain light text color */
+}
+
+.contact-button {
+    background-color: var(--primary-purple);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto; /* Push to bottom of card */
+    width: 100%;
+}
+
+.contact-button:hover {
+    background-color: #6a3598;
+}
+
+/* Footer for the search page */
+.footer.secondary-footer {
+    padding-top: 30px; /* Adjust padding if needed */
+}
+
+.footer.secondary-footer .copyright {
+    padding-top: 15px;
+}
+
+.footer.secondary-footer .copyright .fas {
+    color: var(--light-purple);
+    margin-right: 8px;
+}
+
+/* Responsive adjustments for search page */
+@media (max-width: 1200px) {
+    .hospital-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .search-filters {
+        flex-direction: column;
+        align-items: stretch;
+        max-width: 90%;
+    }
+    .filter-group {
+        min-width: unset;
+        width: 100%;
+    }
+    .hospital-grid {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+        padding: 0 10px; /* Add some padding */
+    }
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .legend {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .organ-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for organs on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar .container {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    .navbar .logo {
+        flex-direction: row;
+        font-size: 1.5rem;
+        align-items: center;
+    }
+    .navbar .logo .tagline {
+        display: none; /* Hide tagline on very small screens */
+    }
+    .navbar .last-updated {
+        margin-left: auto; /* Push to the right if space allows */
+    }
+    .search-hero-section h2 {
+        font-size: 1.8rem;
+    }
+    .search-hero-section p {
+        font-size: 0.9rem;
+    }
+    .hospital-card {
+        padding: 20px;
+    }
+    .hospital-card h3 {
+        font-size: 1.5rem;
+    }
+    .organ-grid {
+        grid-template-columns: 1fr; /* Single column for organs on very small screens */
+    }
+}
