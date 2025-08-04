@@ -1,91 +1,66 @@
 const express = require('express');
-const mysql = require('mysql2');
+const { Pool } = require('pg'); // Use Pool from pg library
 const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use the port provided by Render
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// MySQL connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'sree123', // Replace with your password if any
-    database: 'organ_finder' // Corrected database name
+// Connect to PostgreSQL using the DATABASE_URL environment variable
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
 });
 
-db.connect((err) => {
+// A simple test connection to ensure the database is accessible
+pool.connect((err, client, done) => {
     if (err) {
-        console.error('MySQL connection failed:', err);
+        console.error('PostgreSQL connection failed:', err);
     } else {
-        console.log(' MySQL Connected!');
+        console.log('PostgreSQL Connected!');
+        client.release();
     }
 });
 
 // API route to fetch hospitals with optional filters
-app.get("/api/hospitals", (req, res) => {
+app.get("/hospitals", async (req, res) => {
     const { state, district, organ } = req.query;
 
     let sql = `
-        SELECT h.id, h.name, h.state, h.district, h.location, h.address, h.contact, 
+        SELECT h.name, h.state, h.district, h.location, h.address, h.contact, 
                oa.organ_name, oa.quantity
         FROM hospitals h
-        LEFT JOIN organ_availability oa ON h.id = oa.hospital_id
+        JOIN organ_availability oa ON h.id = oa.hospital_id
         WHERE 1 = 1
     `;
 
     const params = [];
 
-    // Filter by state if selected and not "All States"
-    if (state && state !== 'All States') {
-        sql += " AND h.state = ?";
+    // The pg library uses $1, $2, etc. for parameterized queries
+    if (state) {
         params.push(state);
+        sql += ` AND h.state = $${params.length}`;
     }
-    // Filter by district if selected and not "All Districts"
-    if (district && district !== 'All Districts') {
-        sql += " AND h.district = ?";
+    if (district) {
         params.push(district);
+        sql += ` AND h.district = $${params.length}`;
     }
-    // Filter by organ if selected. This works by filtering the final data on the frontend
-    // after all hospitals for the selected state/district are retrieved.
+    if (organ) {
+        params.push(organ);
+        sql += ` AND oa.organ_name = $${params.length}`;
+    }
 
-    db.query(sql, params, (err, result) => {
-        if (err) {
-            console.error(" Error fetching data:", err);
-            return res.status(500).send("Server error");
-        }
-
-        // Transform the flat database result into the nested structure the frontend expects
-        const hospitalsMap = new Map();
-
-        result.forEach(row => {
-            if (!hospitalsMap.has(row.id)) {
-                hospitalsMap.set(row.id, {
-                    id: row.id,
-                    name: row.name,
-                    state: row.state,
-                    district: row.district,
-                    location: row.location,
-                    address: row.address,
-                    contact: row.contact,
-                    organs: {}
-                });
-            }
-            // Add organ availability to the corresponding hospital object
-            if (row.organ_name && row.quantity !== null) {
-                hospitalsMap.get(row.id).organs[row.organ_name] = row.quantity;
-            }
-        });
-
-        const formattedHospitals = Array.from(hospitalsMap.values());
-        res.json(formattedHospitals);
-    });
+    try {
+        const result = await pool.query(sql, params);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
 });
 
-// Start server
 app.listen(port, () => {
-    console.log(` Server running at http://localhost:${port}`);
+    console.log(`Server running on port ${port}`);
 });
