@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: organfinder-api
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "node server.js"
+    rootDirectory: ""
+    envVars:
+      - key: DATABASE_URL
+        value: "postgresql://organfinder_db_user:F6Bzg62L5nhPDCc7kpIpV8CgRwQf3Cq5@dpg-d288c3muk2gs73f0oea0-a/organfinder_db"
